@@ -3,214 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Form Register</title>
+  <title>Form Registrasi</title>
+  <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
-
   <div class="register-container">
-    <div style="text-align: center; font-size: 24px; font-weight: bold; font-family: 'Poppins', sans-serif; color: #7b1fa2;">
-      Selamat Datang 
-    </div>
-    
-    <h2>Buat Akun Baru</h2>
-
+    <h2>Registrasi Akun</h2>
     <div class="form-group">
       <label for="fullname">Nama Lengkap</label>
       <input type="text" id="fullname" name="fullname" required />
     </div>
-
     <div class="form-group">
-      <label for="email">Email Aktif</label>
+      <label for="email">Email</label>
       <input type="email" id="email" name="email" required />
     </div>
-
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required />
     </div>
-
     <div class="form-group">
       <label for="password">Kata Sandi</label>
       <input type="password" id="password" name="password" required />
     </div>
-
     <button class="register-btn">Daftar Sekarang</button>
-
     <div class="login-link">
-      Sudah punya akun? <a href="https://adhaedieswulandari1212.github.io/apalah/">Login</a>
-    </div>
-    <div class="lupasandi">
-      Lupa kata sandi? <a href="#">Lupa Sandi</a>
+      Sudah punya akun? <a href="Login%20Quran%20Apps.html">Login</a>
     </div>
   </div>
 
+  <!-- Tambahkan Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+
+  <script>
+    // Inisialisasi Firebase
+    const firebaseConfig = {
+  apiKey: "AIzaSyBm4iohjK2IjaPvXpE5uSPir2LFXlmpVG4",
+  authDomain: "userdata-quran.firebaseapp.com",
+  projectId: "userdata-quran",
+  storageBucket: "userdata-quran.firebasestorage.app",
+  messagingSenderId: "971982441471",
+  appId: "1:971982441471:web:b2439b51f946eb6ca4f5ca"
+};
+
+    // Inisialisasi aplikasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Fungsi untuk mengirim data ke Firestore
+    function sendToFirestore(user) {
+      db.collection("users").add({
+        namaLengkap: user.namaLengkap,
+        email: user.email,
+        username: user.username,
+        kataSandi: user.kataSandi,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        console.log('Data registrasi berhasil disimpan ke Firestore');
+      })
+      .catch(error => {
+        console.log('Error menyimpan data registrasi:', error);
+      });
+    }
+
+    document.querySelector('.register-btn').addEventListener('click', function() {
+      const namaLengkap = document.getElementById('fullname').value;
+      const email = document.getElementById('email').value;
+      const username = document.getElementById('username').value;
+      const kataSandi = document.getElementById('password').value;
+
+      if (!namaLengkap || !email || !username || !kataSandi) {
+        alert('Semua kolom harus diisi!');
+        return;
+      }
+
+      let pengguna = JSON.parse(localStorage.getItem('pengguna')) || [];
+      if (pengguna.some(user => user.username === username)) {
+        alert('Username sudah terdaftar! Gunakan username lain.');
+        return;
+      }
+
+      const user = { namaLengkap, email, username, kataSandi };
+      pengguna.push(user);
+      localStorage.setItem('pengguna', JSON.stringify(pengguna));
+
+      // Kirim data registrasi ke Firestore
+      sendToFirestore(user);
+
+      alert('Registrasi berhasil! Silakan login.');
+      window.location.href = 'Login%20Quran%20Apps.html';
+    });
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7f2fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
+      padding: 20px;
+    }
+    .register-container {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px 40px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+    .register-container h2 {
+      text-align: center;
+      color: #7b1fa2;
+      margin-bottom: 25px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #6a1b9a;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 15px;
+      border: 2px solid #ccc;
+      background-color: #f0d9f8;
+      color: #333;
+      transition: 0.3s ease;
+    }
+    .form-group input:focus {
+      border-color: #7b1fa2;
+      outline: none;
+      background-color: #f8e5ff;
+    }
+    .register-btn {
+      width: 100%;
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .register-btn:hover {
+      background-color: #7b1fa2;
+    }
+    .login-link {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+    .login-link a {
+      color: #1976d2;
+      text-decoration: none;
+    }
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </body>
 </html>
-
-<style>
-    /* Font family */
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f7f2fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 50vh;
-  padding: 20px;
-}
-
-.register-container {
-  background-color: white;
-  border-radius: 10px;
-  padding: 30px 40px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-}
-
-.register-container h2 {
-  text-align: center;
-  color: #7b1fa2;
-  margin-bottom: 25px;
-}
-
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #6a1b9a;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 15px;
-  border: 2px solid #ccc;
-  background-color: #f0d9f8;
-  color: #333;
-  transition: 0.3s ease;
-}
-
-.form-group input:focus {
-  border-color: #7b1fa2;
-  outline: none;
-  background-color: #f8e5ff;
-}
-
-.register-btn {
-  width: 100%;
-  background-color: #9c27b0;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.register-btn:hover {
-  background-color: #7b1fa2;
-}
-
-.login-link {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.login-link a {
-  color: #1976d2;
-  text-decoration: none;
-}
-
-.login-link a:hover {
-  text-decoration: underline;
-}
-
-.lupasandi {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.lupasandi a {
-  color: #1976d2;
-  text-decoration: none;
-}
-
-.lupasandi a:hover {
-  text-decoration: underline;
-}
-
-</style>
-
-<script>
-  
-
-
-// Fungsi untuk mengirim data ke Google Sheets
-function sendToGoogleSheets(user) {
-  console.log('Mengirim data registrasi:', user); // Debugging
-  const url = 'https://script.google.com/macros/s/AKfycbxqMn3MTq9KGYXdXpW9etyAEzzt-jzB8bVowxjiWN5_-VuQNbAJRMkXm_IVEaYgO55C/exec'; // Ganti dengan URL Web App baru
-  const data = {
-    namaLengkap: user.namaLengkap,
-    email: user.email,
-    username: user.username,
-    kataSandi: user.kataSandi
-  };
-
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    mode: 'no-cors'
-  })
-  .then(response => {
-    console.log('Data registrasi berhasil dikirim ke Google Sheets');
-  })
-  .catch(error => {
-    console.log('Error mengirim data registrasi:', error);
-  });
-}
-
-document.querySelector('.register-btn').addEventListener('click', function() {
-  const namaLengkap = document.getElementById('fullname').value;
-  const email = document.getElementById('email').value;
-  const username = document.getElementById('username').value;
-  const kataSandi = document.getElementById('password').value;
-
-  if (!namaLengkap || !email || !username || !kataSandi) {
-    alert('Semua kolom harus diisi!');
-    return;
-  }
-
-  let pengguna = JSON.parse(localStorage.getItem('pengguna')) || [];
-  if (pengguna.some(user => user.username === username)) {
-    alert('Username sudah terdaftar! Gunakan username lain.');
-    return;
-  }
-
-  const user = { namaLengkap, email, username, kataSandi };
-  pengguna.push(user);
-  localStorage.setItem('pengguna', JSON.stringify(pengguna));
-
-  // Kirim data registrasi ke Google Sheets
-  sendToGoogleSheets(user);
-
-  alert('Registrasi berhasil! Silakan login.');
-  window.location.href = 'https://adhaedieswulandari1212.github.io/apalah/';
-});
-
-</script>
