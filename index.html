@@ -3,51 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Form Registrasi</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Form Register</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
+
   <div class="register-container">
-    <h2>Registrasi Akun</h2>
+    <div style="text-align: center; font-size: 24px; font-weight: bold; font-family: 'Poppins', sans-serif; color: #7b1fa2;">
+      Selamat Datang 
+    </div>
+    
+    <h2>Buat Akun Baru</h2>
+
     <div class="form-group">
       <label for="fullname">Nama Lengkap</label>
       <input type="text" id="fullname" name="fullname" required />
     </div>
+
     <div class="form-group">
-      <label for="email">Email</label>
+      <label for="email">Email Aktif</label>
       <input type="email" id="email" name="email" required />
     </div>
+
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required />
     </div>
+
     <div class="form-group">
       <label for="password">Kata Sandi</label>
       <input type="password" id="password" name="password" required />
     </div>
+
     <button class="register-btn">Daftar Sekarang</button>
+
     <div class="login-link">
-      Sudah punya akun? <a href="Login%20Quran%20Apps.html">Login</a>
+      Sudah punya akun? <a href="https://adhaedieswulandari1212.github.io/apalah/">Login</a>
+    </div>
+    <div class="lupasandi">
+      Lupa kata sandi? <a href="#">Lupa Sandi</a>
     </div>
   </div>
 
-  <!-- Tambahkan Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+</body>
+</html>
 
-  <script>
-    // Inisialisasi Firebase
-    const firebaseConfig = {
-  apiKey: "AIzaSyBm4iohjK2IjaPvXpE5uSPir2LFXlmpVG4",
-  authDomain: "userdata-quran.firebaseapp.com",
-  projectId: "userdata-quran",
-  storageBucket: "userdata-quran.firebasestorage.app",
-  messagingSenderId: "971982441471",
-  appId: "1:971982441471:web:b2439b51f946eb6ca4f5ca"
-};
+<style>
+    /* Font family */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f2fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 20px;
+}
+
+.register-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px 40px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.register-container h2 {
+  text-align: center;
+  color: #7b1fa2;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #6a1b9a;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 15px;
+  border: 2px solid #ccc;
+  background-color: #f0d9f8;
+  color: #333;
+  transition: 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #7b1fa2;
+  outline: none;
+  background-color: #f8e5ff;
+}
+
+.register-btn {
+  width: 100%;
+  background-color: #9c27b0;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #7b1fa2;
+}
+
+.login-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.lupasandi {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.lupasandi a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.lupasandi a:hover {
+  text-decoration: underline;
+}
+
+</style>
+
+<script>
+  
+
+
+// Inisialisasi Firebase
+const firebaseConfig = {
+      apiKey: "AIzaSyDFpc0mftNsFvsu0gWVvxCRFg8TIXzhw",
+      authDomain: "settingdata-dc78b.firebaseapp.com",
+      projectId: "settingdata-dc78b",
+      storageBucket: "settingdata-dc78b.appspot.com",
+      messagingSenderId: "82738155654",
+      appId: "1:82738155654:web:e8852f326914d6862d7487"
+    };
     // Inisialisasi aplikasi Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -69,109 +188,32 @@
       });
     }
 
-    document.querySelector('.register-btn').addEventListener('click', function() {
-      const namaLengkap = document.getElementById('fullname').value;
-      const email = document.getElementById('email').value;
-      const username = document.getElementById('username').value;
-      const kataSandi = document.getElementById('password').value;
+document.querySelector('.register-btn').addEventListener('click', function() {
+  const namaLengkap = document.getElementById('fullname').value;
+  const email = document.getElementById('email').value;
+  const username = document.getElementById('username').value;
+  const kataSandi = document.getElementById('password').value;
 
-      if (!namaLengkap || !email || !username || !kataSandi) {
-        alert('Semua kolom harus diisi!');
-        return;
-      }
+  if (!namaLengkap || !email || !username || !kataSandi) {
+    alert('Semua kolom harus diisi!');
+    return;
+  }
 
-      let pengguna = JSON.parse(localStorage.getItem('pengguna')) || [];
-      if (pengguna.some(user => user.username === username)) {
-        alert('Username sudah terdaftar! Gunakan username lain.');
-        return;
-      }
+  let pengguna = JSON.parse(localStorage.getItem('pengguna')) || [];
+  if (pengguna.some(user => user.username === username)) {
+    alert('Username sudah terdaftar! Gunakan username lain.');
+    return;
+  }
 
-      const user = { namaLengkap, email, username, kataSandi };
-      pengguna.push(user);
-      localStorage.setItem('pengguna', JSON.stringify(pengguna));
+  const user = { namaLengkap, email, username, kataSandi };
+  pengguna.push(user);
+  localStorage.setItem('pengguna', JSON.stringify(pengguna));
 
-      // Kirim data registrasi ke Firestore
-      sendToFirestore(user);
+  // Kirim data registrasi ke Google Sheets
+  sendToGoogleSheets(user);
 
-      alert('Registrasi berhasil! Silakan login.');
-      window.location.href = ' https://ujicoba434.github.io/login-quran/';
-    });
-  </script>
+  alert('Registrasi berhasil! Silakan login.');
+  window.location.href = 'https://adhaedieswulandari1212.github.io/apalah/';
+});
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f7f2fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 50vh;
-      padding: 20px;
-    }
-    .register-container {
-      background-color: white;
-      border-radius: 10px;
-      padding: 30px 40px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-    .register-container h2 {
-      text-align: center;
-      color: #7b1fa2;
-      margin-bottom: 25px;
-    }
-    .form-group {
-      margin-bottom: 18px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 500;
-      color: #6a1b9a;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 15px;
-      border: 2px solid #ccc;
-      background-color: #f0d9f8;
-      color: #333;
-      transition: 0.3s ease;
-    }
-    .form-group input:focus {
-      border-color: #7b1fa2;
-      outline: none;
-      background-color: #f8e5ff;
-    }
-    .register-btn {
-      width: 100%;
-      background-color: #9c27b0;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-    .register-btn:hover {
-      background-color: #7b1fa2;
-    }
-    .login-link {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 14px;
-    }
-    .login-link a {
-      color: #1976d2;
-      text-decoration: none;
-    }
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</body>
-</html>
+</script>
